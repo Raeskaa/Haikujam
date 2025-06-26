@@ -14,7 +14,7 @@
         :root {
             --background-color: #f8f9fa;
             --page-bg-color: #ffffff;
-            --sidebar-bg-color: #f8f9fa;
+            --sidebar-bg-color: #ffffff; /* Static white background for sidebar */
             --text-color: #212529;
             --heading-color: #000000;
             --accent-color: #4a044e; /* Deep purple */
@@ -26,7 +26,7 @@
         body { font-family: 'Inter', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; font-size: 16px; transition: background-color 0.3s ease; }
         h1, h2, h3, h4 { font-family: 'Inter', sans-serif; color: var(--heading-color); line-height: 1.3; font-weight: 700; }
         h1 { font-size: 2rem; } h2 { font-size: 1.5rem; margin-top: 2.5rem; } h3 { font-size: 1.25rem; margin-top: 2rem; } h4 { font-size: 1.125rem; margin-top: 1.5rem; font-weight: 600; }
-        .sidebar { background-color: var(--sidebar-bg-color); border-right: 1px solid var(--border-color); transition: background-color 0.3s ease; }
+        .sidebar { background-color: var(--sidebar-bg-color); border-right: 1px solid var(--border-color); }
         .sidebar-link.active { color: var(--accent-color); font-weight: 600; background-color: var(--accent-color-light); }
         .sidebar-link { transition: all 0.2s ease-in-out; }
         .sidebar-link:hover { color: var(--accent-color); background-color: #e9ecef; }
@@ -41,7 +41,7 @@
         sup { color: var(--accent-color); font-weight: 600; font-size: 0.7rem; vertical-align: super; margin-left: 2px; }
         .flow-map-note { font-size: 0.8rem; color: #6c757d; font-style: italic; margin-top: 0.25rem; text-align: center;}
         
-        /* New Styles for Theme Toggle */
+        /* Theme Toggle Styles */
         .theme-toggle {
             position: fixed;
             bottom: 20px;
@@ -97,7 +97,7 @@
             <div class="page-container p-8 md:p-12">
                 <header class="mb-12 border-b pb-6">
                     <h1 class="font-bold mb-2">Haikujam</h1>
-                    <p class="text-slate-600">The Definitive Product Requirements Document v6.1 <sup>AI Team Edition</sup></p>
+                    <p class="text-slate-600">The Definitive Product Requirements Document v6.3 <sup>AI Team Edition</sup></p>
                 </header>
 
                 <section id="part1" class="mb-12 scroll-mt-24">
@@ -393,8 +393,8 @@
             themeDots.forEach(dot => {
                 dot.addEventListener('click', () => {
                     const color = dot.dataset.color;
+                    // Only change the main body background color
                     document.documentElement.style.setProperty('--background-color', color);
-                    document.documentElement.style.setProperty('--sidebar-bg-color', color);
                 });
             });
         });
