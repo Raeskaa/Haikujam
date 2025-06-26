@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haikujam: The Definitive PRD</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #f8f9fa;
+            --page-bg-color: #ffffff;
+            --sidebar-bg-color: #f8f9fa;
+            --text-color: #212529;
+            --heading-color: #000000;
+            --accent-color: #4a044e; /* Deep purple */
+            --accent-color-light: #f3e8ff;
+            --border-color: #dee2e6;
+            --code-bg: #f1f3f5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        /* Updated Heading Size Hierarchy */
+        h1 { font-size: 2rem; } /* 32px */
+        h2 { font-size: 1.5rem; margin-top: 2.5rem; } /* 24px */
+        h3 { font-size: 1.25rem; margin-top: 2rem; } /* 20px */
+        h4 { font-size: 1.125rem; margin-top: 1.5rem; font-weight: 600; } /* 18px */
+
+
+        .sidebar {
+            background-color: var(--sidebar-bg-color);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .sidebar-link.active {
+            color: var(--accent-color);
+            font-weight: 600;
+            background-color: var(--accent-color-light);
+        }
+        
+        .sidebar-link {
+             transition: all 0.2s ease-in-out;
+        }
+
+        .sidebar-link:hover {
+            color: var(--accent-color);
+            background-color: #e9ecef;
+        }
+        
+        .page-container {
+            background-color: var(--page-bg-color);
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        blockquote {
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #495057;
+        }
+        
+        .diagram-container {
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+        }
+        .flow-box {
+            border: 1px solid #ced4da;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            background-color: white;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+        .flow-arrow {
+            position: relative;
+            flex-grow: 1;
+            height: 1px;
+            background-color: #adb5bd;
+            margin: 0 0.5rem;
+        }
+        .flow-arrow::after {
+            content: '►';
+            position: absolute;
+            right: -8px;
+            top: -10px;
+            color: #adb5bd;
+            font-size: 0.875rem;
+        }
+        .flow-group {
+            border: 2px dashed #adb5bd;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        pre {
+             background-color: var(--code-bg);
+             padding: 1rem;
+             border-radius: 0.5rem;
+             font-family: 'Source Code Pro', monospace;
+             white-space: pre-wrap;
+             word-wrap: break-word;
+             font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Main Container -->
+    <div class="flex">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar w-64 h-screen fixed top-0 left-0 p-4 hidden lg:block overflow-y-auto">
+            <h4 class="font-bold text-lg px-2 mb-4">Haikujam PRD</h4>
+            <nav id="sidebar-nav" class="flex flex-col space-y-1 text-sm">
+                <p class="font-bold text-xs uppercase tracking-wider px-2 mt-4 mb-2 text-slate-500">1. Vision</p>
+                <a href="#part1" class="sidebar-link text-slate-700 p-2 rounded-md">Introduction</a>
+                <a href="#philosophy" class="sidebar-link text-slate-700 p-2 rounded-md">Core Philosophy</a>
+                <a href="#conceptual_model" class="sidebar-link text-slate-700 p-2 rounded-md">Conceptual Model</a>
+
+                <p class="font-bold text-xs uppercase tracking-wider px-2 mt-4 mb-2 text-slate-500">2. Product</p>
+                <a href="#part2" class="sidebar-link text-slate-700 p-2 rounded-md">User Personas</a>
+                <a href="#user_flows" class="sidebar-link text-slate-700 p-2 rounded-md">User Flows</a>
+                
+                <p class="font-bold text-xs uppercase tracking-wider px-2 mt-4 mb-2 text-slate-500">3. Execution</p>
+                <a href="#part3" class="sidebar-link text-slate-700 p-2 rounded-md">Features</a>
+                <a href="#design_system" class="sidebar-link text-slate-700 p-2 rounded-md">Design & UI/UX</a>
+                <a href="#tech_considerations" class="sidebar-link text-slate-700 p-2 rounded-md">Technical Spec</a>
+
+                <p class="font-bold text-xs uppercase tracking-wider px-2 mt-4 mb-2 text-slate-500">4. Future</p>
+                <a href="#part4" class="sidebar-link text-slate-700 p-2 rounded-md">Roadmap</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="lg:ml-64 w-full">
+            <div class="page-container p-8 md:p-12">
+                <header class="mb-12 border-b pb-6">
+                    <h1 class="font-bold mb-2">Haikujam</h1>
+                    <p class="text-slate-600">The Definitive Product Requirements Document v3.1</p>
+                </header>
+
+                <!-- Part 1: The Vision -->
+                <section id="part1" class="mb-12 scroll-mt-24">
+                    <h2>Part 1: Vision & Thesis</h2>
+                    <article class="mt-6">
+                        <h3>1.0 The Core Problem</h3>
+                        <p>Current digital platforms, architected around the monetization of attention, have inadvertently suppressed authentic human creativity. They combat boredom with endless, algorithmically-homogenized consumption, creating a cycle of passive engagement that leads to creative paralysis, perfectionism, and a profound sense of disconnection. Haikujam is a direct response to this crisis. It is not another social network; it is an anti-network, a collaborative system designed to reintroduce friction, accident, and introspection into the creative process. By rejecting engagement metrics and embracing imperfection, we aim to transform users from passive consumers into active creators, fostering a space where vulnerability is a feature, not a bug, and where the process of creation is valued more than the polished product.</p>
+                    </article>
+                </section>
+
+                <section id="philosophy" class="mb-12 scroll-mt-24">
+                     <h2>1.1 Core Philosophy</h2>
+                      <article class="mt-6">
+                        <ol class="list-decimal list-outside space-y-4 ml-5">
+                            <li><strong>Ghat-Daru (The Platform is the Place, Content is the Spirit):</strong> Haikujam (the *ghat*) must be a simple, intuitive, and almost invisible platform. The true product is the feeling of intoxication and freedom—the *daru*—that users experience through creation. The platform must get out of the way.</li>
+                            <li><strong>Create Beautiful Accidents:</strong> We will intentionally design systems that provoke unexpected outcomes. This is about replicating "stupidity" and serendipity. Features will encourage users to break rules, turning mistakes into opportunities for novel expression.</li>
+                            <li><strong>Embrace Wabi-Sabi:</strong> The aesthetic and ethos will celebrate the flawed, the broken, and the incomplete. The "glitch" is not an error; it is a feature.</li>
+                            <li><strong>Process Over Product:</strong> We will invert the social media hierarchy. The value lies in the drafts, the abandoned ideas, and the collaborative back-and-forth—not just the final artifact. The platform will make this process visible and celebrated.</li>
+                             <li><strong>The Seed and the Tree:</strong> Creation is an organic, living process. A user plants a `Seed` (an initial idea). Others can nurture it, causing it to grow into a `Branch`. From this branch, new ideas can `Leaf`. This visual metaphor of a collaborative, growing organism is central to our design.</li>
+                            <li><strong>Anti-Metric & Anti-Viral:</strong> Success is not measured by likes, shares, or follower counts. We will actively design against virality and status signaling to foster intrinsic motivation.</li>
+                        </ol>
+                    </article>
+                </section>
+
+                <section id="conceptual_model" class="mb-12 scroll-mt-24">
+                     <h2>1.2 Conceptual Model</h2>
+                      <article class="mt-6">
+                        <p class="mb-4">To build Haikujam, the entire team must share a common language. Our system is not made of "posts" and "comments"; it is a digital ecosystem based on the following concepts:</p>
+                        <ul class="list-disc list-outside ml-5 space-y-3">
+                            <li><strong>Seed:</strong> The genesis of all creation. A `Seed` is the initial, raw input from a user—a single line of text, a doodle, a sound. It is planted in the shared world.</li>
+                            <li><strong>Branch:</strong> A `Seed` that is nurtured or collaborated on grows into a `Branch`. This represents a developing line of thought or a continuous piece of work. A branch is a linear sequence of contributions.</li>
+                            <li><strong>Leaf:</strong> A `Leaf` is a divergent idea that pops out of a `Branch`. It's a non-linear contribution, a riff, a tangent. A user can select any part of a branch and add a `Leaf` to it, creating a new path for exploration.</li>
+                            <li><strong>Fruit:</strong> A collection of words, images, or sounds that can be "eaten" by a user to get a new `Seed`. This is a core mechanism for prompting.</li>
+                            <li><strong>Steal Button:</strong> The primary interaction mechanism, replacing "Like" or "Upvote." "Stealing" a `Seed` or `Leaf` means you copy it to your private journal to use as inspiration later. It's an act of appreciation through utility.</li>
+                        </ul>
+                        <div class="diagram-container mt-8">
+                            <h4 class="text-center font-semibold mb-4">System Flow Diagram</h4>
+                            <div class="flow-group">
+                                <h4 class="text-center text-sm font-semibold mb-4 text-slate-600">INDIVIDUAL</h4>
+                                <div class="flex items-center justify-center">
+                                    <div class="flow-box">Emptiness</div>
+                                    <div class="flow-arrow"></div>
+                                    <div class="flow-box">Expressive<br>Ecstasy</div>
+                                    <div class="flow-arrow"></div>
+                                    <div class="flow-box">Fullness</div>
+                                </div>
+                            </div>
+                            <div class="flex justify-center my-4 text-slate-400">↓</div>
+                            <div class="flow-group">
+                                <h4 class="text-center text-sm font-semibold mb-4 text-slate-600">PRODUCT</h4>
+                                <div class="flex items-center justify-center">
+                                    <div class="flow-box">Creation</div>
+                                    <div class="flow-arrow"></div>
+                                    <div class="flow-box">Collaboration</div>
+                                    <div class="flow-arrow"></div>
+                                    <div class="flow-box">Distribution</div>
+                                </div>
+                            </div>
+                             <div class="flex justify-center my-4 text-slate-400">↓</div>
+                            <div class="flow-group">
+                                <h4 class="text-center text-sm font-semibold mb-4 text-slate-600">ENVIRONMENT</h4>
+                                <div class="flex items-center justify-center">
+                                    <div class="flow-box">Society /<br>Other Human</div>
+                                    <div class="flow-arrow"></div>
+                                    <div class="flow-box">Environment</div>
+                                    <div class="flow-arrow"></div>
+                                    <div class="flow-box">Call to Action</div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+
+                <!-- Part 2: The Product -->
+                <section id="part2" class="mb-12 scroll-mt-24">
+                    <h2>Part 2: The Users</h2>
+                     <article class="mt-6">
+                        <h3>2.0 Target Audience & Personas</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4>1. Aisha K. - The Hesitant Creator</h4>
+                                <blockquote>"I have ideas, but I'm scared they're not good enough to share."</blockquote>
+                                <p>Aisha needs a space where she can experiment without consequence. She is the primary user for the "private by default" and "Incognito" features. Her journey is about finding the confidence to plant her first `Seed`.</p>
+                            </div>
+                            <div>
+                                <h4>2. Sagar M. - The Collaborative Storyteller</h4>
+                                <blockquote>"Creation is a conversation. Let's make something weird together."</blockquote>
+                                <p>Sagar thrives on improvisation. He will be a power user of the `Branch` and `Leaf` mechanics, jumping into live jams and adding his perspective to others' work. The "Steal" button is made for him.</p>
+                            </div>
+                             <div>
+                                <h4>3. Mahesh - The Reflective Soloist</h4>
+                                <blockquote>"I create to understand myself. The noise is a distraction."</blockquote>
+                                <p>Mahesh uses Haikujam as a personal journal. They need the "Quiet Mode" sanctuary. They might "eat a Fruit" for inspiration but will primarily focus on cultivating their own private garden of `Seeds`.</p>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                 <section id="user_flows" class="mb-12 scroll-mt-24">
+                    <h2>2.1 User Experience & Flows</h2>
+                    <article class="mt-6">
+                        <h3>Flow 1: Aisha Plants a Seed</h3>
+                        <ol class="list-decimal list-outside ml-5 space-y-2">
+                           <li><strong>Open App:</strong> No sign-up. The app presents a minimalist canvas. Prompt: "Plant a seed."</li>
+                           <li><strong>First Creation:</strong> Aisha types "distant sound of rain". This `Seed` is now planted in her private garden.</li>
+                           <li><strong>Nurturing the Seed:</strong> She can add to it, creating a `Branch`. Or, after 3 private seeds, a new option appears: "Let it drift?". This releases her `Seed` anonymously into the public streams.</li>
+                        </ol>
+                    </article>
+                     <article class="mt-6">
+                        <h3>Flow 2: Sagar Creates a Leaf</h3>
+                        <ol class="list-decimal list-outside ml-5 space-y-2">
+                           <li><strong>Discover:</strong> Sagar browses the "Streams" feed. He finds a `Branch` that starts with "distant sound of rain".</li>
+                           <li><strong>Add a Leaf:</strong> He taps a word in the branch. An option appears: "Add a leaf". He types "Divyam smokes". A new, divergent path is created, visually branching off the original.</li>
+                           <li><strong>Steal a Seed:</strong> He likes another user's `Leaf`: "we all live". Instead of a like button, he hits the "Steal" button. A copy of that `Leaf` is added to his private collection to be used as a `Seed` later.</li>
+                        </ol>
+                    </article>
+                </section>
+
+                <!-- Part 3: The Execution -->
+                <section id="part3" class="mb-12 scroll-mt-24">
+                     <h2>Part 3: Features & Execution</h2>
+                     <article class="mt-6">
+                        <h3>3.0 Core Epics & Requirements</h3>
+                         <div class="space-y-6">
+                            <div>
+                                <h4>EPIC 1: The Organic Canvas</h4>
+                                <ul class="list-disc list-outside ml-5 space-y-1">
+                                    <li><strong>Story:</strong> As a user, I want to plant a `Seed` by typing, scribbling, or recording a sound, so I can start creating with any raw idea.</li>
+                                    <li><strong>Requirements:</strong> Canvas must support text, vector-based drawing (SVG), and audio uploads. All initial creations are `Seeds`. Implement "Imperfectionist Tools" (Glitch Brush, Wabi-Sabi Mode).</li>
+                                </ul>
+                            </div>
+                             <div>
+                                <h4>EPIC 2: Branching & Leaving</h4>
+                                 <ul class="list-disc list-outside ml-5 space-y-1">
+                                     <li><strong>Story:</strong> As Sagar, I want to add my own line to an existing `Branch` and also create a divergent `Leaf` from any word in it.</li>
+                                      <li><strong>Requirements:</strong> The system must support two forms of collaboration: linear additions to a `Branch` and non-linear `Leaves`. The UI must visually represent this branching structure, like a tree. Implement the "Steal" button as the primary interaction.</li>
+                                 </ul>
+                            </div>
+                            <div>
+                                 <h4>EPIC 3: Privacy & Anonymity</h4>
+                                 <ul class="list-disc list-outside ml-5 space-y-1">
+                                     <li><strong>Story:</strong> As Aisha, I want my identity to be hidden when I "let a seed drift" into the public so I can share without fear.</li>
+                                     <li><strong>Requirements:</strong> All creations private by default. Anonymous pen names for public contributions. Granular sharing controls (e.g., ephemeral links for `Mahesh`).</li>
+                                 </ul>
+                            </div>
+                         </div>
+                     </article>
+                </section>
+                
+                <section id="design_system" class="mb-12 scroll-mt-24">
+                     <h2>3.1 Design & UI/UX</h2>
+                     <article class="mt-6">
+                        <h3>Visual Metaphor: The Digital Ecosystem</h3>
+                        <p class="mb-4">The entire UI will be built around the visual metaphor of a growing, living garden or forest. This is not just decorative; it's functional.</p>
+                        <ul class="list-disc list-outside ml-5 space-y-2">
+                            <li><strong>Layout:</strong> The main discovery view could be a navigable 2D grid or infinite canvas, where `Branches` appear as growing trees. Users can zoom in and out to explore.</li>
+                            <li><strong>Representation:</strong> `Seeds` are small, glowing dots. `Branches` are lines connecting nodes. `Leaves` are small offshoots from the main branch. The more a branch is "stolen," the more vibrant or lush it appears.</li>
+                            <li><strong>Color & Texture:</strong> The palette is organic and earthy. Use textured backgrounds to feel tactile. The UI for "Quiet Mode" is stark and simple, like a zen garden.</li>
+                        </ul>
+                     </article>
+                </section>
+
+                <section id="tech_considerations" class="mb-12 scroll-mt-24">
+                     <h2>3.2 Technical Spec</h2>
+                     <article class="mt-6">
+                        <h3>Architecture & Data Model</h3>
+                        <p class="mb-4">An offline-first, client-server model is essential. Real-time collaboration will be managed via WebSockets. The data model is the core challenge and must be a graph structure.</p>
+                        <pre><code>// Represents a single node in the creation graph
+interface CreationNode {
+  nodeId: string;
+  authorId: string; // Can be anonymous
+  content: {
+    text?: string;
+    svg?: string;
+    audioUrl?: string;
+  };
+  timestamp: Date;
+  parent_node_id: string | null;
+  leaves: string[]; // Array of nodeId's that are leaves
+  stolen_by: string[]; // Array of userIds
+  type: 'SEED' | 'BRANCH_NODE' | 'LEAF';
+}</code></pre>
+                        <h3 class="mt-6">Key Technical Challenges</h3>
+                        <ul class="list-disc list-outside ml-5 space-y-2">
+                           <li><strong>Graph Database:</strong> A graph database (like Neo4j or ArangoDB) is strongly recommended over a document store to efficiently query the complex relationships between branches and leaves.</li>
+                           <li><strong>Real-time Sync:</strong> Managing real-time updates on a shared, branching canvas will require a robust CRDT (Conflict-free Replicated Data Type) implementation or careful state management on the server.</li>
+                           <li><strong>Canvas Rendering:</strong> Rendering a potentially vast, zoomable 2D world of creations efficiently will require a performant graphics library like Two.js, PixiJS, or custom WebGL rendering.</li>
+                        </ul>
+                     </article>
+                </section>
+
+                <!-- Part 4: The Future -->
+                <section id="part4" class="scroll-mt-24">
+                    <h2>Part 4: Go-to-Market & Roadmap</h2>
+                    <article class="mt-6">
+                        <h3>4.0 Go-to-Market Strategy</h3>
+                        <ol class="list-decimal list-outside ml-5 space-y-3">
+                             <li><strong>Phase 1: Closed Alpha (0-3 Months):</strong> Invite-only for a core group of 50-100 creators who align with the philosophy. Focus entirely on testing the core creation and collaboration loop.</li>
+                            <li><strong>Phase 2: Open Beta (3-9 Months):</strong> An open-but-not-promoted beta. Users find it through word-of-mouth. We will focus on stability, performance, and gathering qualitative feedback.</li>
+                            <li><strong>Phase 3: Public Launch & Partnerships (9-18 Months):</strong> A quiet, organic launch. Focus on partnerships with literary journals, art schools, and mental health organizations. No paid user acquisition.</li>
+                        </ol>
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // JS for active sidebar link on scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('#sidebar-nav a');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (`#${entry.target.id}` === link.getAttribute('href')) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-20% 0px -75% 0px', threshold: 0 });
+            sections.forEach(section => { observer.observe(section); });
+        });
+    </script>
+</body>
+</html>
